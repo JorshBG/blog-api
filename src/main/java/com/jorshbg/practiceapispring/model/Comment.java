@@ -21,7 +21,7 @@ public class Comment {
     private User author;
 
     @ManyToOne
-    @JoinColumn(name = "post")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @CreatedDate
