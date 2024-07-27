@@ -49,7 +49,8 @@ public class User {
 
     private String biography;
 
-    private String remember_token;
+    @Column(name = "remember_token")
+    private String rememberToken;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<Post> posts;
@@ -65,12 +66,12 @@ public class User {
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 
-    public String getRemember_token() {
-        return remember_token;
+    public String getRememberToken() {
+        return rememberToken;
     }
 
-    public void setRemember_token(String remember_token) {
-        this.remember_token = remember_token;
+    public void setRememberToken(String remember_token) {
+        this.rememberToken = remember_token;
     }
 
     public List<Post> getPosts() {
