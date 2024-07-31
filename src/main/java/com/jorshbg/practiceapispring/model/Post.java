@@ -1,9 +1,10 @@
 package com.jorshbg.practiceapispring.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import com.jorshbg.practiceapispring.model.User;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -27,9 +28,11 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "author")
+    @JsonBackReference
     private User author;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @JsonManagedReference
     private List<Comment> comments;
 
     @CreatedDate

@@ -1,5 +1,6 @@
 package com.jorshbg.practiceapispring.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,10 +19,12 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "author")
+    @JsonBackReference
     private User author;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
 
     @CreatedDate
