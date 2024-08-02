@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -36,11 +38,11 @@ public class Post {
     @JsonManagedReference
     private List<Comment> comments;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 

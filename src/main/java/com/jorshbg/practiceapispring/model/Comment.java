@@ -3,6 +3,8 @@ package com.jorshbg.practiceapispring.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -31,11 +33,11 @@ public class Comment {
     @JsonBackReference
     private Post post;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 
