@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiEntityResponse<CommentResponse>> getAll(@PathVariable Long id, @Autowired HttpServletRequest request){
+    public ResponseEntity<ApiEntityResponse<CommentResponse>> getById(@PathVariable Long id, @Autowired HttpServletRequest request){
         return ResponseEntity.ok(
                 ApiResponseUtility.getResponse(
                         CommentMapper.INSTANCE.toCommentResponse(commentService.getById(id)),
@@ -38,7 +38,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiEntityResponse<CommentResponse>> create(@Validated @RequestBody CommentPostRequest newComment, @Autowired HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<ApiEntityResponse<CommentResponse>> store(@Validated @RequestBody CommentPostRequest newComment, @Autowired HttpServletRequest request) throws URISyntaxException {
         Comment comment = commentService.save(newComment);
         return ResponseEntity.created(new URI(request.getContextPath() + request.getServletPath() + "/" + comment.getId())).body(
                 ApiResponseUtility.getResponse(
@@ -55,7 +55,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiEntityResponse<CommentResponse>> create(@Validated @RequestBody CommentPutRequest update, @PathVariable Long id, @Autowired HttpServletRequest request){
+    public ResponseEntity<ApiEntityResponse<CommentResponse>> update(@Validated @RequestBody CommentPutRequest update, @PathVariable Long id, @Autowired HttpServletRequest request){
         return ResponseEntity.ok(
                 ApiResponseUtility.getResponse(
                         CommentMapper.INSTANCE.toCommentResponse(commentService.update(id, update)),

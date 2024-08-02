@@ -27,7 +27,7 @@ public class PostController {
     private CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<PostResponse>> getAllPosts(@RequestParam(value = "page", defaultValue = "1") int page, @Autowired HttpServletRequest request) {
+    public ResponseEntity<PagedResponse<PostResponse>> getAll(@RequestParam(value = "page", defaultValue = "1") int page, @Autowired HttpServletRequest request) {
         return ResponseEntity.ok().body(postService.getAllPosts(page, request));
     }
 
@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiEntityResponse<PostResponse>> create(@Validated @RequestBody PostPostRequest post, @Autowired HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<ApiEntityResponse<PostResponse>> store(@Validated @RequestBody PostPostRequest post, @Autowired HttpServletRequest request) throws URISyntaxException {
         Post created = this.postService.save(post);
         String uri = request.getContextPath() + request.getServletPath() + "/"+ created.getId();
         return ResponseEntity.created(new URI(uri)).body(ApiResponseUtility.getResponse(PostMapper.INSTANCE.toPostResponse(created), this.getDefaultPostLinks(request)));
