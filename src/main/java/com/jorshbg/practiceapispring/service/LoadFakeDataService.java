@@ -9,6 +9,7 @@ import com.jorshbg.practiceapispring.repository.PostRepository;
 import com.jorshbg.practiceapispring.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +37,18 @@ public class LoadFakeDataService {
 //    @Autowired
     private CommentRepository commentRepository;
 
+//    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
 //    @PostConstruct
 //    @Transactional
     public void init(){
         userRepository.deleteAll();
         postRepository.deleteAll();
         commentRepository.deleteAll();
+        jdbcTemplate.execute("TRUNCATE TABLE comments RESTART IDENTITY CASCADE");
+        jdbcTemplate.execute("TRUNCATE TABLE posts RESTART IDENTITY CASCADE");
+        jdbcTemplate.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
 
         List<User> users = new ArrayList<>();
         List<Post> posts = new ArrayList<>();
