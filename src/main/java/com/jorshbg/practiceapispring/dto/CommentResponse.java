@@ -16,6 +16,16 @@ public class CommentResponse {
 
     private LocalDateTime createdAt;
 
+    private LocalDateTime lastModifiedAt;
+
+    public LocalDateTime getLastModifiedAt() {
+        return lastModifiedAt;
+    }
+
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt;
+    }
+
     public Long getId() {
         return id;
     }
