@@ -1,7 +1,6 @@
 package com.jorshbg.practiceapispring.service;
 
-import com.jorshbg.practiceapispring.dto.PagedResponse;
-import com.jorshbg.practiceapispring.dto.PostResponse;
+import com.jorshbg.practiceapispring.dto.*;
 import com.jorshbg.practiceapispring.mapper.PostMapper;
 import com.jorshbg.practiceapispring.model.Post;
 import com.jorshbg.practiceapispring.model.User;
@@ -52,14 +51,28 @@ public class PostService {
     }
 
     public void deleteById(Long id){
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
         postRepository.deleteById(id);
     }
 
-    public Post save(@NotNull Post post){
+    public Post save(@NotNull PostPostRequest create){
+        User user = this.userRepository.findById(create.getAuthorId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        Post post = new Post();
+        post.setAuthor(user);
+        post.setTitle(create.getTitle());
+        post.setContent(create.getContent());
         return postRepository.save(post);
     }
 
-    public Post update(@NotNull Post post){
+    public Post update(Long id, @NotNull PostPutRequest update) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+        PostMapper.INSTANCE.putPost(update, post);
+        return postRepository.save(post);
+    }
+
+    public Post partialUpdate(Long id, @NotNull PostPatchRequest update) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+        PostMapper.INSTANCE.patchPost(update, post);
         return postRepository.save(post);
     }
 
