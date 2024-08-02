@@ -9,6 +9,7 @@ import com.jorshbg.practiceapispring.repository.PostRepository;
 import com.jorshbg.practiceapispring.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,29 +20,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//@Service
+@Service
+@Profile("dev")
 public class LoadFakeDataService {
 
-//    @Autowired
+    @Autowired
     private PasswordEncoder encoder;
 
     private Faker faker = new Faker();
     private Random random = new Random();
 
-//    @Autowired
+    @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
+    @Autowired
     private PostRepository postRepository;
 
-//    @Autowired
+    @Autowired
     private CommentRepository commentRepository;
 
-//    @Autowired
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-//    @PostConstruct
-//    @Transactional
+    @PostConstruct
+    @Transactional
     public void init(){
         userRepository.deleteAll();
         postRepository.deleteAll();
