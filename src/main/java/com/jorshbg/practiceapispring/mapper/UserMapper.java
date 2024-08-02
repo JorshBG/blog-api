@@ -17,7 +17,7 @@ public interface UserMapper {
 
     void patchUser(UserPatchRequest userPatchRequest, @MappingTarget User user);
 
-    void putUser(UserPutRequest userPatchRequest, @MappingTarget User user);
+    void putUser(UserPutRequest userPutRequest, @MappingTarget User user);
 
     User createUser(UserPostRequest userPostRequest);
 
