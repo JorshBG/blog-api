@@ -1,5 +1,7 @@
 package com.jorshbg.practiceapispring.service;
 
+import com.jorshbg.practiceapispring.dto.CommentPostRequest;
+import com.jorshbg.practiceapispring.dto.CommentPutRequest;
 import com.jorshbg.practiceapispring.dto.CommentResponse;
 import com.jorshbg.practiceapispring.dto.PagedResponse;
 import com.jorshbg.practiceapispring.mapper.CommentMapper;
@@ -65,19 +67,31 @@ public class CommentService {
     }
 
     public void delete(Long id){
+        this.commentRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found"));
         commentRepository.deleteById(id);
     }
 
-    public Comment save(@NotNull Comment comment){
+    public Comment save(@NotNull CommentPostRequest comment){
+        Post post = this.postRepository.findById(comment.getPostId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+        User user = this.userRepository.findById(comment.getAuthorId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        Comment created = new Comment();
+        created.setAuthor(user);
+        created.setPost(post);
+        created.setContent(comment.getContent());
+        return commentRepository.save(created);
+    }
+
+    public Comment update(Long id, @NotNull CommentPutRequest update){
+        Comment comment = this.commentRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found"));
+        comment.setContent(update.getContent());
         return commentRepository.save(comment);
     }
 
-    public Comment update(@NotNull Comment comment){
-        return commentRepository.save(comment);
-    }
-
-    public Iterable<Comment> getAll(){
-        return commentRepository.findAll();
+    public PagedResponse<CommentResponse> getAll(int page, HttpServletRequest request){
+        Pageable pageable = getPageable(page);
+        Page<Comment> paginated = this.commentRepository.findAll(pageable);
+        Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
+        return ApiResponseUtility.getPagedResponse(comments, paginated, "comments", request);
     }
 
     public Comment getById(Long id){
