@@ -26,6 +26,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "author")
     @JsonBackReference
