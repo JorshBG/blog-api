@@ -36,6 +36,10 @@ public class FakerBlogData {
         return comment(author, post());
     }
 
+    public static Comment comment(Post post){
+        return comment(user(), post);
+    }
+
     public static Comment comment(User author, Post post) {
         Comment comment = new Comment();
         comment.setContent(faker.lorem().sentence(5));
