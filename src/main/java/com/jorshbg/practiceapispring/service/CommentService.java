@@ -55,6 +55,15 @@ public class CommentService {
         return ApiResponseUtility.getPagedResponse(comments, paginated, uri, request);
     }
 
+    public PagedResponse<CommentResponse> getByPost(Long postId, int page, HttpServletRequest request) {
+        Post post = this.postRepository.findById(postId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+        Pageable pageable = getPageable(page);
+        Page<Comment> paginated = this.commentRepository.findByPost(pageable, post);
+        Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
+        String uri = "/posts/" + postId + "/comments";
+        return ApiResponseUtility.getPagedResponse(comments, paginated, uri, request);
+    }
+
     public void delete(Long id){
         commentRepository.deleteById(id);
     }
