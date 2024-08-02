@@ -7,11 +7,12 @@ import com.jorshbg.practiceapispring.repository.CommentRepository;
 import com.jorshbg.practiceapispring.repository.PostRepository;
 import com.jorshbg.practiceapispring.repository.UserRepository;
 import com.jorshbg.practiceapispring.util.FakerBlogData;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.Random;
 
@@ -31,12 +32,20 @@ public class UserTests {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private Faker faker = new Faker();
     private Random random = new Random();
 
-    @BeforeAll
-    static void setUp(){
-
+    @BeforeEach
+    void setUp(){
+        commentRepository.deleteAll();
+        postRepository.deleteAll();
+        repository.deleteAll();
+        jdbcTemplate.execute("TRUNCATE TABLE comments RESTART IDENTITY CASCADE");
+        jdbcTemplate.execute("TRUNCATE TABLE posts RESTART IDENTITY CASCADE");
+        jdbcTemplate.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     }
 
     @Test
@@ -50,7 +59,7 @@ public class UserTests {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.data.length()").isEqualTo(10)
+                .jsonPath("$.data.length()").isEqualTo(5)
                 .jsonPath("$.data[0].id").isNotEmpty()
                 .jsonPath("$.links").isNotEmpty()
                 .jsonPath("$.metadata").isNotEmpty();
