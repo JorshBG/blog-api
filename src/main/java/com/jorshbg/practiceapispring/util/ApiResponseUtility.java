@@ -12,23 +12,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Component
 public class ApiResponseUtility {
 
-
-    public static ApiEntityResponse<UserResponse> userResponse(UserResponse userResponse, HttpServletRequest request) {
-        ApiEntityResponse<UserResponse> response = new ApiEntityResponse<>();
-
-        response.setData(userResponse);
-
-        LinkedHashMap<String, String> links = new LinkedHashMap<>();
-        links.put("self", getBaseUrl(request).concat("/users"));
-        links.put("comments", getBaseUrl(request).concat("/users/").concat(userResponse.getId().toString()).concat("/comments"));
-        links.put("posts", getBaseUrl(request).concat("/users/").concat(userResponse.getId().toString()).concat("/posts"));
-
+    public static <T> ApiEntityResponse<T> getResponse(T entity, LinkedHashMap<String, String> links) {
+        ApiEntityResponse<T> response = new ApiEntityResponse<>();
+        response.setData(entity);
         response.setLinks(links);
-
         return response;
     }
 
@@ -51,31 +43,6 @@ public class ApiResponseUtility {
         return response;
     }
 
-
-
-    private static String getBaseUrl(HttpServletRequest request) {
-        String scheme = request.getScheme();             // http
-        String serverName = request.getServerName();     // localhost
-        int serverPort = request.getServerPort();        // 8080
-        String contextPath = request.getContextPath();   // / (si hay un contexto)
-
-        // Construye la URL base
-        StringBuilder url = new StringBuilder();
-        url.append(scheme).append("://").append(serverName);
-
-        if (serverPort != 80 && serverPort != 443) {
-            url.append(":").append(serverPort);
-        }
-
-        url.append(contextPath);
-
-        return url.toString();
-    }
-
-    public static PagedResponse<Post> getPagedPostResponse(Iterable<PostResponse> posts, Page<Post> paginated, HttpServletRequest request) {
-        return null;
-    }
-
     private static <T> LinkedHashMap<String, String> createMetadataForPagination(Page<T> pagination){
         LinkedHashMap<String, String> metadata = new LinkedHashMap<>();
         metadata.put("totalPages", String.valueOf(pagination.getTotalPages()));
@@ -87,16 +54,16 @@ public class ApiResponseUtility {
 
     private static <T> LinkedHashMap<String, String> createLinksForPagination(HttpServletRequest request, String entityName, int total, int currentPage){
         LinkedHashMap<String, String> links = new LinkedHashMap<>();
-        links.put("self", getBaseUrl(request).concat(entityName +"?page=" + currentPage));
+        links.put("self", entityName +"?page=" + currentPage);
         links.put("next",
                 (currentPage >= total) ?
                         null :
-                        getBaseUrl(request).concat(entityName +"?page=" + (currentPage + 1))
+                        entityName +"?page=" + (currentPage + 1)
         );
         links.put("prev",
                 (currentPage <= 1) ?
                         null :
-                        getBaseUrl(request).concat(entityName +"?page=" + (currentPage - 1))
+                        entityName +"?page=" + (currentPage - 1)
         );
         return links;
     }
