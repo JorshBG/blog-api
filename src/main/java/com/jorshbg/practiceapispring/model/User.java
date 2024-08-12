@@ -4,19 +4,24 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 6845031328595617221L;
+
+    //region Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,13 +58,20 @@ public class User {
 
     @Column(name = "remember_token")
     private String rememberToken;
+    //endregion
 
+    //region Relationships
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<Post> posts;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<Comment> comments;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private List<Post> likes;
+    //endregion
+
+    //region timestamps
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -67,116 +79,5 @@ public class User {
     @UpdateTimestamp
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String remember_token) {
-        this.rememberToken = remember_token;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getLastModifiedAt() {
-        return lastModifiedAt;
-    }
-
-    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
-        this.lastModifiedAt = lastModifiedAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public @NotNull @Size(max = 40) String getUsername() {
-        return username;
-    }
-
-    public void setUsername(@NotNull @Size(max = 40) String username) {
-        this.username = username;
-    }
-
-    public @NotNull @Size(max = 60) String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NotNull @Size(max = 60) String password) {
-        this.password = password;
-    }
-
-    public @NotNull @Size(max = 50) String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(@NotNull @Size(max = 50) String firstName) {
-        this.firstName = firstName;
-    }
-
-    public @Size(max = 50) @NotNull String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(@Size(max = 50) @NotNull String lastName) {
-        this.lastName = lastName;
-    }
-
-    public @NotNull @Email String getEmail() {
-        return email;
-    }
-
-    public void setEmail(@NotNull @Email String email) {
-        this.email = email;
-    }
-
-    public @Size(min = 5, max = 25) String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(@Size(min = 5, max = 25) String phone) {
-        this.phone = phone;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
+    //endregion
 }
