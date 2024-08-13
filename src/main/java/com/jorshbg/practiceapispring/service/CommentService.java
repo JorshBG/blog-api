@@ -36,7 +36,11 @@ public class CommentService {
     private PostRepository postRepository;
 
     private Pageable getPageable(int page){
-        return PageRequest.of(page - 1, 5, Sort.Direction.ASC, "id");
+        return this.getPageable(page, 5);
+    }
+
+    private Pageable getPageable(int page, int size){
+        return PageRequest.of(page - 1, size, Sort.Direction.ASC, "id");
     }
 
     public PagedResponse<CommentResponse> getByAuthor(Long userId, int page, HttpServletRequest request) {
@@ -87,8 +91,8 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public PagedResponse<CommentResponse> getAll(int page, HttpServletRequest request){
-        Pageable pageable = getPageable(page);
+    public PagedResponse<CommentResponse> getAll(int page, int size, HttpServletRequest request){
+        Pageable pageable = getPageable(page, size);
         Page<Comment> paginated = this.commentRepository.findAll(pageable);
         Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
         return ApiResponseUtility.getPagedResponse(comments, paginated, "comments", request);

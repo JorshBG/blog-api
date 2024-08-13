@@ -23,8 +23,12 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<CommentResponse>> getAll(@RequestParam(value = "page", defaultValue = "1") int page, @Autowired HttpServletRequest request){
-        return ResponseEntity.ok(commentService.getAll(page, request));
+    public ResponseEntity<PagedResponse<CommentResponse>> getAll(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @Autowired HttpServletRequest request
+    ){
+        return ResponseEntity.ok(commentService.getAll(page, size, request));
     }
 
     @GetMapping("/{id}")

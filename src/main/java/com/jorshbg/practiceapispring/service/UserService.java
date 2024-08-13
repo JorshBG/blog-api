@@ -45,8 +45,8 @@ public class UserService {
         return UserMapper.INSTANCE.toUserResponse(user);
     }
 
-    public PagedResponse<UserResponse> readAll(int page, HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(page - 1, 10,Sort.Direction.ASC,
+    public PagedResponse<UserResponse> readAll(int page, int size, HttpServletRequest request) {
+        Pageable pageable = PageRequest.of(page - 1, size,Sort.Direction.ASC,
                         "id");
         Page<User> paginated = userRepository.findAll(pageable);
         Iterable<UserResponse> users = UserMapper.INSTANCE.toUserResponses(paginated.getContent());

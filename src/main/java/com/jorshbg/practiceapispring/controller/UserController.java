@@ -29,8 +29,12 @@ public class UserController {
     private CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<UserResponse>> getAll(@RequestParam(value = "page", defaultValue = "1") int page, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(userService.readAll(page, request));
+    public ResponseEntity<PagedResponse<UserResponse>> getAll(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @Autowired HttpServletRequest request
+    ) {
+        return ResponseEntity.ok().body(userService.readAll(page, size, request));
     }
 
     @GetMapping("/{id}")

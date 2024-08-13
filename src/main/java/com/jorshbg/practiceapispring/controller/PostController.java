@@ -27,8 +27,12 @@ public class PostController {
     private CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<PostResponse>> getAll(@RequestParam(value = "page", defaultValue = "1") int page, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(postService.getAllPosts(page, request));
+    public ResponseEntity<PagedResponse<PostResponse>> getAll(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @Autowired HttpServletRequest request
+    ) {
+        return ResponseEntity.ok().body(postService.getAllPosts(page, size, request));
     }
 
     @GetMapping("/{id}")

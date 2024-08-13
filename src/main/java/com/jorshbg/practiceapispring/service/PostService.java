@@ -27,8 +27,8 @@ public class PostService {
     @Autowired
     private UserRepository userRepository;
 
-    public PagedResponse<PostResponse> getAllPosts(int page, HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.Direction.ASC, "id");
+    public PagedResponse<PostResponse> getAllPosts(int page, int size, HttpServletRequest request) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.Direction.ASC, "id");
         Page<Post> paginated = postRepository.findAll(pageable);
         Iterable<PostResponse> posts = PostMapper.INSTANCE.toPostResponse(paginated.getContent());
 
