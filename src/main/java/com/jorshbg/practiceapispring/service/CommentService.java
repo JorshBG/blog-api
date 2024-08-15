@@ -48,7 +48,7 @@ public class CommentService {
         Pageable pageable = getPageable(page);
         Page<Comment> paginated = this.commentRepository.findByAuthor(pageable, user);
         Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
-        return ApiResponseUtility.getPagedResponse(comments, paginated, "/users/".concat(String.valueOf(userId)).concat("/comments"), request);
+        return ApiResponseUtility.getPagedResponse(comments, paginated, "/users/".concat(String.valueOf(userId)).concat("/comments"));
     }
 
     public PagedResponse<CommentResponse> getByAuthorAndPost(Long userId, Long postId, int page, HttpServletRequest request) {
@@ -58,7 +58,7 @@ public class CommentService {
         Page<Comment> paginated = this.commentRepository.findByAuthorAndPost(pageable, user, post);
         Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
         String uri = "/users/" + userId + "/posts/" + postId + "/comments";
-        return ApiResponseUtility.getPagedResponse(comments, paginated, uri, request);
+        return ApiResponseUtility.getPagedResponse(comments, paginated, uri);
     }
 
     public PagedResponse<CommentResponse> getByPost(Long postId, int page, HttpServletRequest request) {
@@ -67,7 +67,7 @@ public class CommentService {
         Page<Comment> paginated = this.commentRepository.findByPost(pageable, post);
         Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
         String uri = "/posts/" + postId + "/comments";
-        return ApiResponseUtility.getPagedResponse(comments, paginated, uri, request);
+        return ApiResponseUtility.getPagedResponse(comments, paginated, uri);
     }
 
     public void delete(Long id){
@@ -95,7 +95,7 @@ public class CommentService {
         Pageable pageable = getPageable(page, size);
         Page<Comment> paginated = this.commentRepository.findAll(pageable);
         Iterable<CommentResponse> comments = CommentMapper.INSTANCE.toCommentResponse(paginated.getContent());
-        return ApiResponseUtility.getPagedResponse(comments, paginated, "comments", request);
+        return ApiResponseUtility.getPagedResponse(comments, paginated, "comments");
     }
 
     public Comment getById(Long id){

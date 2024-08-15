@@ -30,14 +30,14 @@ public class ApiResponseUtility {
      * @param paginated Pagination from the repository
      * @param requestMappingName URI request mapping for the entity. Ej.: users posts comments
      */
-    public static <T, E> PagedResponse<T> getPagedResponse(Iterable<T> data, Page<E> paginated, String requestMappingName, HttpServletRequest request) {
+    public static <T, E> PagedResponse<T> getPagedResponse(Iterable<T> data, Page<E> paginated, String requestMappingName) {
         PagedResponse<T> response = new PagedResponse<>();
 
         int total = paginated.getTotalPages();
         int currentPage = paginated.getNumber() + 1;
 
         response.setData(data);
-        response.setLinks(createLinksForPagination(request, requestMappingName, total, currentPage));
+        response.setLinks(createLinksForPagination(requestMappingName, total, currentPage));
         response.setMetadata(createMetadataForPagination(paginated));
 
         return response;
@@ -52,7 +52,7 @@ public class ApiResponseUtility {
         return metadata;
     }
 
-    private static <T> LinkedHashMap<String, String> createLinksForPagination(HttpServletRequest request, String entityName, int total, int currentPage){
+    private static <T> LinkedHashMap<String, String> createLinksForPagination(String entityName, int total, int currentPage){
         LinkedHashMap<String, String> links = new LinkedHashMap<>();
         links.put("self", entityName +"?page=" + currentPage);
         links.put("next",

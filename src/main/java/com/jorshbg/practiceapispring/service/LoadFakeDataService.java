@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-@Profile("dev")
+@Profile("dev-with-fakers")
 public class LoadFakeDataService {
 
     @Autowired

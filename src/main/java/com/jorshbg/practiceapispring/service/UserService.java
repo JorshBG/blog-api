@@ -6,9 +6,12 @@ import com.jorshbg.practiceapispring.model.User;
 import com.jorshbg.practiceapispring.repository.CommentRepository;
 import com.jorshbg.practiceapispring.repository.PostRepository;
 import com.jorshbg.practiceapispring.repository.UserRepository;
+import com.jorshbg.practiceapispring.service.interfaces.IServiceGeneric;
 import com.jorshbg.practiceapispring.util.ApiResponseUtility;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +53,7 @@ public class UserService {
                         "id");
         Page<User> paginated = userRepository.findAll(pageable);
         Iterable<UserResponse> users = UserMapper.INSTANCE.toUserResponses(paginated.getContent());
-        return ApiResponseUtility.getPagedResponse(users, paginated, "users", request);
+        return ApiResponseUtility.getPagedResponse(users, paginated, "users");
     }
 
     public UserResponse updatePut(Long id, @NotNull UserPutRequest update) {
@@ -79,8 +82,6 @@ public class UserService {
         );
         userRepository.deleteById(user.getId());
     }
-
-
 
 
 }

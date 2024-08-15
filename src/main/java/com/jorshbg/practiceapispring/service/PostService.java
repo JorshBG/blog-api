@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Service
 public class PostService {
@@ -32,7 +33,7 @@ public class PostService {
         Page<Post> paginated = postRepository.findAll(pageable);
         Iterable<PostResponse> posts = PostMapper.INSTANCE.toPostResponse(paginated.getContent());
 
-        return ApiResponseUtility.getPagedResponse(posts, paginated, "posts", request);
+        return ApiResponseUtility.getPagedResponse(posts, paginated, "posts");
     }
 
     public PostResponse getById(Long id) {
@@ -47,7 +48,7 @@ public class PostService {
         Pageable pageable = PageRequest.of(page - 1, 10, Sort.Direction.ASC, "id");
         Page<Post> paginated = this.postRepository.findByAuthor(user, pageable);
         Iterable<PostResponse> posts = PostMapper.INSTANCE.toPostResponse(paginated.getContent());
-        return ApiResponseUtility.getPagedResponse(posts, paginated, "/users/".concat(String.valueOf(userId)).concat("/posts"), request);
+        return ApiResponseUtility.getPagedResponse(posts, paginated, "/users/".concat(String.valueOf(userId)).concat("/posts"));
     }
 
     public void deleteById(Long id){
