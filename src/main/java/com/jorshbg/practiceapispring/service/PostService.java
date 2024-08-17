@@ -1,6 +1,10 @@
 package com.jorshbg.practiceapispring.service;
 
-import com.jorshbg.practiceapispring.dto.*;
+import com.jorshbg.practiceapispring.dto.requests.PostPatchRequest;
+import com.jorshbg.practiceapispring.dto.requests.PostPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.PostPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
+import com.jorshbg.practiceapispring.dto.responses.PostResponse;
 import com.jorshbg.practiceapispring.mapper.PostMapper;
 import com.jorshbg.practiceapispring.model.Post;
 import com.jorshbg.practiceapispring.model.User;
@@ -17,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Service
 public class PostService {

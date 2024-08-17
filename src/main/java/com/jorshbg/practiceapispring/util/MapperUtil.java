@@ -1,6 +1,10 @@
 package com.jorshbg.practiceapispring.util;
 
-import com.jorshbg.practiceapispring.dto.*;
+import com.jorshbg.practiceapispring.dto.requests.UserPatchRequest;
+import com.jorshbg.practiceapispring.dto.requests.UserPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.CommentResponse;
+import com.jorshbg.practiceapispring.dto.responses.PostResponse;
+import com.jorshbg.practiceapispring.dto.responses.UserResponse;
 import com.jorshbg.practiceapispring.mapper.CommentMapper;
 import com.jorshbg.practiceapispring.mapper.PostMapper;
 import com.jorshbg.practiceapispring.mapper.UserMapper;

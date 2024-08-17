@@ -1,6 +1,10 @@
 package com.jorshbg.practiceapispring.controller;
 
-import com.jorshbg.practiceapispring.dto.*;
+import com.jorshbg.practiceapispring.dto.requests.CommentPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.CommentPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.ApiEntityResponse;
+import com.jorshbg.practiceapispring.dto.responses.CommentResponse;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
 import com.jorshbg.practiceapispring.mapper.CommentMapper;
 import com.jorshbg.practiceapispring.model.Comment;
 import com.jorshbg.practiceapispring.service.CommentService;

@@ -1,7 +1,5 @@
-package com.jorshbg.practiceapispring.dto;
+package com.jorshbg.practiceapispring.dto.responses;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.jorshbg.practiceapispring.model.Post;
 import com.jorshbg.practiceapispring.model.User;
 
 import java.time.LocalDateTime;

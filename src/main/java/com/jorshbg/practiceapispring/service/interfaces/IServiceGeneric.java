@@ -1,9 +1,7 @@
 package com.jorshbg.practiceapispring.service.interfaces;
 
-import com.jorshbg.practiceapispring.dto.ApiEntityResponse;
-import com.jorshbg.practiceapispring.dto.PagedResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.jorshbg.practiceapispring.dto.responses.ApiEntityResponse;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.server.ResponseStatusException;
 

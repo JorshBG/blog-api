@@ -1,18 +1,11 @@
 package com.jorshbg.practiceapispring.util;
 
-import com.jorshbg.practiceapispring.dto.ApiEntityResponse;
-import com.jorshbg.practiceapispring.dto.PagedResponse;
-import com.jorshbg.practiceapispring.dto.PostResponse;
-import com.jorshbg.practiceapispring.dto.UserResponse;
-import com.jorshbg.practiceapispring.model.Post;
-import jakarta.servlet.http.HttpServletRequest;
+import com.jorshbg.practiceapispring.dto.responses.ApiEntityResponse;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Component
 public class ApiResponseUtility {

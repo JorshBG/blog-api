@@ -1,8 +1,8 @@
 package com.jorshbg.practiceapispring.mapper;
 
-import com.jorshbg.practiceapispring.dto.PostPatchRequest;
-import com.jorshbg.practiceapispring.dto.PostPutRequest;
-import com.jorshbg.practiceapispring.dto.PostResponse;
+import com.jorshbg.practiceapispring.dto.requests.PostPatchRequest;
+import com.jorshbg.practiceapispring.dto.requests.PostPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.PostResponse;
 import com.jorshbg.practiceapispring.model.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

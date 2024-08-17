@@ -1,17 +1,18 @@
 package com.jorshbg.practiceapispring.service;
 
-import com.jorshbg.practiceapispring.dto.*;
+import com.jorshbg.practiceapispring.dto.requests.UserPatchRequest;
+import com.jorshbg.practiceapispring.dto.requests.UserPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.UserPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
+import com.jorshbg.practiceapispring.dto.responses.UserResponse;
 import com.jorshbg.practiceapispring.mapper.UserMapper;
 import com.jorshbg.practiceapispring.model.User;
 import com.jorshbg.practiceapispring.repository.CommentRepository;
 import com.jorshbg.practiceapispring.repository.PostRepository;
 import com.jorshbg.practiceapispring.repository.UserRepository;
-import com.jorshbg.practiceapispring.service.interfaces.IServiceGeneric;
 import com.jorshbg.practiceapispring.util.ApiResponseUtility;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

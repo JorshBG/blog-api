@@ -1,9 +1,9 @@
 package com.jorshbg.practiceapispring.service;
 
-import com.jorshbg.practiceapispring.dto.CommentPostRequest;
-import com.jorshbg.practiceapispring.dto.CommentPutRequest;
-import com.jorshbg.practiceapispring.dto.CommentResponse;
-import com.jorshbg.practiceapispring.dto.PagedResponse;
+import com.jorshbg.practiceapispring.dto.requests.CommentPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.CommentPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.CommentResponse;
+import com.jorshbg.practiceapispring.dto.responses.PagedResponse;
 import com.jorshbg.practiceapispring.mapper.CommentMapper;
 import com.jorshbg.practiceapispring.model.Comment;
 import com.jorshbg.practiceapispring.model.Post;

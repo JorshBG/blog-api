@@ -1,6 +1,6 @@
 package com.jorshbg.practiceapispring.mapper;
 
-import com.jorshbg.practiceapispring.dto.CommentResponse;
+import com.jorshbg.practiceapispring.dto.responses.CommentResponse;
 import com.jorshbg.practiceapispring.model.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

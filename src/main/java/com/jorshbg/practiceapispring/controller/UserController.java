@@ -1,6 +1,9 @@
 package com.jorshbg.practiceapispring.controller;
 
-import com.jorshbg.practiceapispring.dto.*;
+import com.jorshbg.practiceapispring.dto.requests.UserPatchRequest;
+import com.jorshbg.practiceapispring.dto.requests.UserPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.UserPutRequest;
+import com.jorshbg.practiceapispring.dto.responses.*;
 import com.jorshbg.practiceapispring.service.CommentService;
 import com.jorshbg.practiceapispring.service.PostService;
 import com.jorshbg.practiceapispring.service.UserService;

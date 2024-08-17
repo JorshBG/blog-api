@@ -1,7 +1,7 @@
 package com.jorshbg.practiceapispring;
 
 import com.github.javafaker.Faker;
-import com.jorshbg.practiceapispring.dto.PostPostRequest;
+import com.jorshbg.practiceapispring.dto.requests.PostPostRequest;
 import com.jorshbg.practiceapispring.model.Post;
 import com.jorshbg.practiceapispring.model.User;
 import com.jorshbg.practiceapispring.repository.CommentRepository;
