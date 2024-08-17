@@ -69,6 +69,9 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private List<Post> likes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ChangeLog> changeLogs;
     //endregion
 
     //region timestamps
