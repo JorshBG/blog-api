@@ -9,11 +9,11 @@ public interface IServiceGeneric<T, E> {
 
     ApiEntityResponse<T> getById(E id) throws ResponseStatusException;
 
-    T save(T entity) throws ResponseStatusException;
+    ApiEntityResponse<T> save(T entity) throws ResponseStatusException;
 
     void delete(E id) throws ResponseStatusException;
 
-    T update(T entity) throws ResponseStatusException;
+    ApiEntityResponse<T> update(T entity) throws ResponseStatusException;
 
     PagedResponse<T> getAll(int page, int size) throws ResponseStatusException;
 
