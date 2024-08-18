@@ -43,7 +43,10 @@ public class BlogException extends ResponseStatusException implements Serializab
             break;
             case 400: LOGGER.error("Bad request: {}", reason);
             break;
+            case 404: LOGGER.error("Not found: {}", reason);
+            break;
             default: LOGGER.warn("An error has been throw: {}", reason);
+            break;
         }
     }
 
