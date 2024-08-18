@@ -1,17 +1,23 @@
 package com.jorshbg.practiceapispring.util;
 
 import java.lang.reflect.Field;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
  * Get all the field that change from an objeto to another
+ *
  * @param <T> Object type
  */
 public class UpdatesTrackerUtil<T> {
 
     /**
      * Get all the changes from an object to another
-     * @param base Initial object with no changes
+     *
+     * @param base    Initial object with no changes
      * @param updated Object with changes
      * @return A map of changes based in fields
      * @throws IllegalAccessException If the fields of the object cannot be acceded.
@@ -27,15 +33,23 @@ public class UpdatesTrackerUtil<T> {
 
         Class<?> clazz = base.getClass();
 
-        if(this.checkInValidObjects(clazz)){
-            return updates;
-        }
-
         for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);
             Object previous = field.get(base);
             Object current = field.get(updated);
 
+            if(this.isDefaultTimestamps(field.getName())){
+                continue;
+            }
+
+            if (this.checkInValidObjects(previous.getClass())) {
+                continue;
+            }
+
+            if(this.isDate(previous.getClass())){
+                previous = previous.toString();
+                current = current.toString();
+            }
 
             if (previous != null && current != null && !previous.equals(current)) {
                 if (this.isPrimitive(previous.getClass()) || previous.getClass().isArray()) {
@@ -45,7 +59,7 @@ public class UpdatesTrackerUtil<T> {
                     if (previous.getClass().isArray() && !Arrays.deepEquals((Object[]) previous, (Object[]) current)) {
                         updates.get(base.getClass().getName())
                                 .put(field.getName(), String.format("Previous: %s, Current: %s", this.convertArrayToString((Object[]) previous), this.convertArrayToString((Object[]) current)));
-                    } else if(!previous.getClass().isArray()) {
+                    } else if (!previous.getClass().isArray()) {
                         updates.get(base.getClass().getName()).put(
                                 field.getName(),
                                 String.format("Previous: %s, Current: %s", previous, current)
@@ -70,15 +84,27 @@ public class UpdatesTrackerUtil<T> {
     private String convertArrayToString(Object[] array) {
         StringBuilder sb = new StringBuilder();
         if (array != null) {
-            for(Object value: array){
+            for (Object value : array) {
                 sb.append(value);
             }
             return sb.toString();
         }
         return null;
     }
-    private boolean checkInValidObjects(Class<?> clazz){
-        return Map.class.isAssignableFrom(clazz) || List.class.isAssignableFrom(clazz) || Iterable.class.isAssignableFrom(clazz);
+
+    private boolean checkInValidObjects(Class<?> clazz) {
+        return Map.class.isAssignableFrom(clazz) || List.class.isAssignableFrom(clazz)
+                || Iterable.class.isAssignableFrom(clazz) || Set.class.isAssignableFrom(clazz);
+    }
+
+    private boolean isDate(Class<?> clazz) {
+        return Date.class.isAssignableFrom(clazz) || LocalDateTime.class.isAssignableFrom(clazz)
+                || LocalDate.class.isAssignableFrom(clazz) || LocalTime.class.isAssignableFrom(clazz)
+                || Time.class.isAssignableFrom(clazz);
+    }
+
+    private boolean isDefaultTimestamps(String fieldName) {
+        return fieldName.equals("lastModifiedAt") || fieldName.equals("createdAt");
     }
 
 }
