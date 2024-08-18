@@ -3,8 +3,19 @@ package com.jorshbg.practiceapispring.util;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * Get all the field that change from an objeto to another
+ * @param <T> Object type
+ */
 public class UpdatesTrackerUtil<T> {
 
+    /**
+     * Get all the changes from an object to another
+     * @param base Initial object with no changes
+     * @param updated Object with changes
+     * @return A map of changes based in fields
+     * @throws IllegalAccessException If the fields of the object cannot be acceded.
+     */
     public Map<String, Map<String, String>> getUpdates(T base, T updated) throws IllegalAccessException {
         Map<String, Map<String, String>> updates = new HashMap<>();
         return this.trackUpdates(base, updated, updates);
