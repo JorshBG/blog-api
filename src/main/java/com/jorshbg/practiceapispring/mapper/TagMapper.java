@@ -1,5 +1,6 @@
 package com.jorshbg.practiceapispring.mapper;
 
+import com.jorshbg.practiceapispring.dto.requests.TagDTO;
 import com.jorshbg.practiceapispring.dto.responses.TagResponse;
 import com.jorshbg.practiceapispring.model.Tag;
 import org.mapstruct.Mapper;
@@ -15,6 +16,12 @@ public interface TagMapper {
 
     Iterable<TagResponse> toResponses(Iterable<Tag> tags);
 
-    void update(Tag update, @MappingTarget Tag previous);
+    void update(TagDTO update, @MappingTarget Tag previous);
+
+    void copy(Tag source, @MappingTarget Tag target);
+
+    TagDTO toDTO(Tag tag);
+
+    Tag fromDTO(TagDTO dto);
 
 }
