@@ -24,6 +24,8 @@ public class Tag implements Serializable {
     private Long id;
 
     private String name;
+
+    private Boolean active;
     //endregion
 
     //region Relationships
