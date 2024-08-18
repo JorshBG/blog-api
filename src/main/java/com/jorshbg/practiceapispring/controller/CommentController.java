@@ -38,7 +38,7 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<CommentResponse>> getById(@PathVariable Long id, @Autowired HttpServletRequest request){
         return ResponseEntity.ok(
-                ApiResponseUtility.getResponse(
+                new ApiResponseUtility().getResponse(
                         CommentMapper.INSTANCE.toCommentResponse(commentService.getById(id)),
                         getDefaultLinks(request)
                 )
@@ -49,7 +49,7 @@ public class CommentController {
     public ResponseEntity<ApiEntityResponse<CommentResponse>> store(@Validated @RequestBody CommentPostRequest newComment, @Autowired HttpServletRequest request) throws URISyntaxException {
         Comment comment = commentService.save(newComment);
         return ResponseEntity.created(new URI(request.getContextPath() + request.getServletPath() + "/" + comment.getId())).body(
-                ApiResponseUtility.getResponse(
+                new ApiResponseUtility().getResponse(
                         CommentMapper.INSTANCE.toCommentResponse(comment),
                         getDefaultLinks(request)
                 )
@@ -65,7 +65,7 @@ public class CommentController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<CommentResponse>> update(@Validated @RequestBody CommentPutRequest update, @PathVariable Long id, @Autowired HttpServletRequest request){
         return ResponseEntity.ok(
-                ApiResponseUtility.getResponse(
+                new ApiResponseUtility().getResponse(
                         CommentMapper.INSTANCE.toCommentResponse(commentService.update(id, update)),
                         getDefaultLinks(request)
                 )

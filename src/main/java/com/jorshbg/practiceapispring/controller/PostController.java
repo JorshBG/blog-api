@@ -43,7 +43,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<PostResponse>> getById(@PathVariable Long id, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(ApiResponseUtility.getResponse(postService.getById(id), this.getDefaultPostLinks(request)));
+        return ResponseEntity.ok().body(new ApiResponseUtility().getResponse(postService.getById(id), this.getDefaultPostLinks(request)));
     }
 
     @GetMapping("/{id}/comments")
@@ -55,12 +55,12 @@ public class PostController {
     public ResponseEntity<ApiEntityResponse<PostResponse>> store(@Validated @RequestBody PostPostRequest post, @Autowired HttpServletRequest request) throws URISyntaxException {
         Post created = this.postService.save(post);
         String uri = request.getContextPath() + request.getServletPath() + "/"+ created.getId();
-        return ResponseEntity.created(new URI(uri)).body(ApiResponseUtility.getResponse(PostMapper.INSTANCE.toPostResponse(created), this.getDefaultPostLinks(request)));
+        return ResponseEntity.created(new URI(uri)).body(new ApiResponseUtility().getResponse(PostMapper.INSTANCE.toPostResponse(created), this.getDefaultPostLinks(request)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<PostResponse>> totalUpdate(@PathVariable Long id, @Validated @RequestBody PostPutRequest post, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok(ApiResponseUtility.getResponse(PostMapper.INSTANCE.toPostResponse(this.postService.update(id, post)), this.getDefaultPostLinks(request)));
+        return ResponseEntity.ok(new ApiResponseUtility().getResponse(PostMapper.INSTANCE.toPostResponse(this.postService.update(id, post)), this.getDefaultPostLinks(request)));
     }
 
     @DeleteMapping("/{id}")
@@ -71,7 +71,7 @@ public class PostController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<PostResponse>> partialUpdate(@PathVariable Long id, @Validated @RequestBody PostPatchRequest post, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok(ApiResponseUtility.getResponse(PostMapper.INSTANCE.toPostResponse(this.postService.partialUpdate(id, post)), this.getDefaultPostLinks(request)));
+        return ResponseEntity.ok(new ApiResponseUtility().getResponse(PostMapper.INSTANCE.toPostResponse(this.postService.partialUpdate(id, post)), this.getDefaultPostLinks(request)));
     }
 
     private LinkedHashMap<String, String> getDefaultPostLinks(HttpServletRequest request){

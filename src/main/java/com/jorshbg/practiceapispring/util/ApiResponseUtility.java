@@ -10,7 +10,13 @@ import java.util.LinkedHashMap;
 @Component
 public class ApiResponseUtility {
 
-    public static <T> ApiEntityResponse<T> getResponse(T entity, LinkedHashMap<String, String> links) {
+    /**
+     * Get the entity into a response with links and data
+     * @param entity Data of the entity to response
+     * @param links Links about relations of entity
+     * @param <T> Type of entity
+     */
+    public <T> ApiEntityResponse<T> getResponse(T entity, LinkedHashMap<String, String> links) {
         ApiEntityResponse<T> response = new ApiEntityResponse<>();
         response.setData(entity);
         response.setLinks(links);
@@ -23,29 +29,32 @@ public class ApiResponseUtility {
      * @param paginated Pagination from the repository
      * @param requestMappingName URI request mapping for the entity. Ej.: users posts comments
      */
-    public static <T, E> PagedResponse<T> getPagedResponse(Iterable<T> data, Page<E> paginated, String requestMappingName) {
+    public <T, E> PagedResponse<T> getPagedResponse(Iterable<T> data, Page<E> paginated, String requestMappingName) {
         PagedResponse<T> response = new PagedResponse<>();
 
         int total = paginated.getTotalPages();
         int currentPage = paginated.getNumber() + 1;
 
         response.setData(data);
-        response.setLinks(createLinksForPagination(requestMappingName, total, currentPage));
-        response.setMetadata(createMetadataForPagination(paginated));
+        response.setLinks(this.createLinksForPagination(requestMappingName, total, currentPage));
+        response.setMetadata(this.createMetadataForPagination(paginated));
 
         return response;
     }
 
-    private static <T> LinkedHashMap<String, String> createMetadataForPagination(Page<T> pagination){
+
+    private <T> LinkedHashMap<String, String> createMetadataForPagination(Page<T> pagination){
         LinkedHashMap<String, String> metadata = new LinkedHashMap<>();
         metadata.put("totalPages", String.valueOf(pagination.getTotalPages()));
         metadata.put("totalElements", String.valueOf(pagination.getTotalElements()));
-        metadata.put("elementsPerPage", String.valueOf(pagination.getSize()));
+        metadata.put("elementsPerPage", String.valueOf(pagination.getNumberOfElements()));
         metadata.put("pageNumber", String.valueOf(pagination.getNumber() + 1));
         return metadata;
     }
 
-    private static <T> LinkedHashMap<String, String> createLinksForPagination(String entityName, int total, int currentPage){
+
+
+    private LinkedHashMap<String, String> createLinksForPagination(String entityName, int total, int currentPage){
         LinkedHashMap<String, String> links = new LinkedHashMap<>();
         links.put("self", entityName +"?page=" + currentPage);
         links.put("next",

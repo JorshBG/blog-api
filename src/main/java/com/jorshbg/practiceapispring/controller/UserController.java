@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<UserResponse>> getById(@PathVariable Long id, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(ApiResponseUtility.getResponse(userService.readById(id), this.getDefaultUserLinks(request, id)));
+        return ResponseEntity.ok().body(new ApiResponseUtility().getResponse(userService.readById(id), this.getDefaultUserLinks(request, id)));
     }
 
     @GetMapping("/{id}/posts")
@@ -64,17 +64,17 @@ public class UserController {
     public ResponseEntity<ApiEntityResponse<UserResponse>> store(@Validated @RequestBody UserPostRequest user, @Autowired HttpServletRequest request) throws URISyntaxException {
         var response = userService.create(user);
         var uri = request.getContextPath() + request.getServletPath() + "/" + response.getId();
-        return ResponseEntity.created(new URI(uri)).body(ApiResponseUtility.getResponse(response, this.getDefaultUserLinks(request, response.getId())));
+        return ResponseEntity.created(new URI(uri)).body(new ApiResponseUtility().getResponse(response, this.getDefaultUserLinks(request, response.getId())));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<UserResponse>> totalUpdate(@PathVariable Long id, @Validated @RequestBody UserPutRequest updated, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(ApiResponseUtility.getResponse(userService.updatePut(id, updated), this.getDefaultUserLinks(request, id)));
+        return ResponseEntity.ok().body(new ApiResponseUtility().getResponse(userService.updatePut(id, updated), this.getDefaultUserLinks(request, id)));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiEntityResponse<UserResponse>> partialUpdate(@PathVariable Long id, @Validated @RequestBody UserPatchRequest update, @Autowired HttpServletRequest request) {
-        return ResponseEntity.ok().body(ApiResponseUtility.getResponse(userService.updatePatch(id, update), this.getDefaultUserLinks(request, id)));
+        return ResponseEntity.ok().body(new ApiResponseUtility().getResponse(userService.updatePatch(id, update), this.getDefaultUserLinks(request, id)));
     }
 
     @DeleteMapping("/{id}")

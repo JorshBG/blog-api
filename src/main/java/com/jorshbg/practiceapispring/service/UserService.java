@@ -54,7 +54,7 @@ public class UserService {
                         "id");
         Page<User> paginated = userRepository.findAll(pageable);
         Iterable<UserResponse> users = UserMapper.INSTANCE.toUserResponses(paginated.getContent());
-        return ApiResponseUtility.getPagedResponse(users, paginated, "users");
+        return new ApiResponseUtility().getPagedResponse(users, paginated, "users");
     }
 
     public UserResponse updatePut(Long id, @NotNull UserPutRequest update) {
