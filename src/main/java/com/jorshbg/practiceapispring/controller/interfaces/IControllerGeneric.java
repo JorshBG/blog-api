@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface IControllerGeneric<E, I> {
 
-    ResponseEntity<PagedResponse<E>> getAll(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size);
+    ResponseEntity<PagedResponse<E>> getActiveRecords(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size);
 
-    ResponseEntity<ApiEntityResponse<E>> getOne(@PathVariable I id);
+    ResponseEntity<ApiEntityResponse<E>> getActiveById(@PathVariable I id);
 
     ResponseEntity<ApiEntityResponse<E>> down(@PathVariable I id);
+
+    ResponseEntity<ApiEntityResponse<E>> up(@PathVariable I id);
 
 }
